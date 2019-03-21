@@ -8,6 +8,9 @@
 % Further modifications done by George Higgins Hutchinson
 % July 2018
 
+% Further modifications done by Parth T. Nobel
+% March 2019
+
 % This version of the theme is meant for use with pdfLaTeX
 % or other non-unicode-aware compilers
 
@@ -20,7 +23,7 @@
 \usefonttheme{professionalfonts}
 %\usefonttheme{serif}
 
-\usepackage{opensans}
+\usepackage{cmbright}
 
 
 \setbeamertemplate{footline} % show slide number on all slides but the first
@@ -51,15 +54,24 @@
 \setbeamertemplate{navigation symbols}{} % hide bottom nav buttons
 \setbeamercovered{transparent} % don't hide strip-teased bullet points
 
-\definecolor{barcolor}{HTML}{003262} % official Berkeley blue
+% COLORS from the UCB Brand Guidelines 
+\definecolor{berkeleyblue}{HTML}{003262} 
+\definecolor{foundersrock}{HTML}{3B7EA1} % UCB Brand Guidelines
+\definecolor{medalist}{HTML}{C4820E} % UCB Brand Guidelines
+\definecolor{bayfog}{HTML}{DDD5C7} %Also from UCB Brand Guidelines
+
+\definecolor{barcolor}{named}{berkeleyblue}
 \setbeamercolor{lower separation line head}{bg=barcolor} 
 \setbeamercolor{lower separation line foot}{bg=barcolor} 
 \setbeamercolor{normal text}{fg=black,bg=white} 
 \setbeamercolor{alerted text}{fg=red} 
 \setbeamercolor{example text}{fg=black} 
-\setbeamercolor{structure}{fg=black} 
+%\setbeamercolor{structure}{fg=black} 
+
+\setbeamercolor{title}{fg=berkeleyblue}
+\setbeamercolor{frametitle}{fg=medalist}
+\setbeamercolor{structure}{fg=foundersrock}
  
-\definecolor{bayfog}{HTML}{DDD5C7} %Also from UCB Brand Guidelines
 \setbeamercolor{palette tertiary}{fg=black,bg=bayfog} 
 \setbeamercolor{palette quaternary}{fg=black,bg=bayfog} 
 
