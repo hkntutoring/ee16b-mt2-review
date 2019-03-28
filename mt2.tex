@@ -331,7 +331,7 @@
 	    \item Solve $\vec{f}(\vec{x}^*, \vec{u}^*) = \vec{0}$ to determine the DC operating point. \pause \\
 	    \item Let $\vec{x}_l(t) = \vec{x}(t) - \vec{x}^*$ and $\vec{u}_l(t) = \vec{u}(t) - \vec{u}^*$ \pause \\
 	    \item Linearize $\vec{f}(\vec{x}, \vec{u})$ about $(\vec{x}^*, \vec{u}^*)$. That is: $\vec{f}(\vec{x}(t), \vec{u}(t)) \approx \vec{f}(\vec{x}^*, \vec{u}^*) + J_{\vec{x}}\vec{x}_l(t) + J_{\vec{u}}\vec{u}_l(t)$ \pause \\
-	    \item Plug (iv) back into the ODE: $\frac{d\vec{x}}{dt} \approx \cNCEL{\vec{f}(\vec{x}^*, \vec{u}^*)} + J_{\vec{x}}\vec{x}_l(t) + J_{\vec{u}}\vec{u}_l(t)$
+	    \item Plug (iv) back into the ODE: $\frac{d\vec{x}}{dt} \approx \cancel{\vec{f}(\vec{x}^*, \vec{u}^*)} + J_{\vec{x}}\vec{x}_l(t) + J_{\vec{u}}\vec{u}_l(t)$
 	\end{enumerate}
 
 	\end{frame}
