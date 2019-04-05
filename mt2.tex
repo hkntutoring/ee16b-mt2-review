@@ -1,7 +1,8 @@
 \documentclass{beamer}
 
 \usepackage{xparse}
-\usepackage[siunitx]{circuitikz}
+\usepackage{xfrac}
+\usepackage[siunitx, american]{circuitikz}
 
 \NewDocumentCommand{\differential}{}{\mathrm d}
 
@@ -55,19 +56,50 @@
         \]
         If there exists a non-constant \(\vec x_p(t)\) such that \[
             \exists T> 0,\forall t, \vec x_p(t) = \vec x_p(t + T)
-        \] and \(\vec x_p(t)\) solves the DAE, we say that the system describes an \vocab{Oscillator}.
+        \] and \(\vec x_p(t)\) solves the DAE, we say that the DAE describes an \vocab{Oscillator} or an oscillatory system.
     \end{frame}
 
-    \begin{frame}{Example Problem}
+    \begin{frame}{An Oscillatory Problem}
         \begin{center}
         \begin{tikzpicture}[scale=2]
-            \draw (0, 0) to (1.5, 0) to [C, l=2<\micro\farad>] (1.5, 1) to (0, 1) to [L, l=2<\henry>] (0, 0);
+            \draw (0, 0) to (0.75, 0) to (0.75, 0.0) node[ground] {} to (0.75, 0) to  (1.5, 0) to [C, l=2<\micro\farad>, v_<=\(v\)] (1.5, 1) to (0, 1) to[I=\(i\)] [L, l=2<\henry>] (0, 0);
+            %\node [ground] (0.75, -0.1) {};
         \end{tikzpicture}
         \end{center}
         \begin{enumerate}
-            \item Write out the DAE.
-            \item Show that this circuit is an oscillator.
-            \item Find its period.
+            \item<1-> Write out the DAE.
+                \visible<2->{ \color{foundersrock}
+                    \[
+                            \ddt{}
+                            \begin{bmatrix}
+                                v \\ i
+                            \end{bmatrix}
+                            =
+                            \begin{bmatrix}
+                                0 & -\sfrac{1}{2} \\
+                                \sfrac{10^6}{2} & 0 \\
+                            \end{bmatrix}
+                            \begin{bmatrix}
+                                v \\ i
+                            \end{bmatrix}
+                        \]
+            }
+            \item<1-> Show that this circuit is an oscillator.
+                \visible<3->{ \color{foundersrock}
+                    \[
+                            \vec x_p(t) = \begin{bmatrix}
+                                \cos(\sfrac{10^3}{2}{t}) \\
+                                10^3\sin(\sfrac{10^3}{2} t) \\
+                            \end{bmatrix}
+                        \]
+            }
+            \item<1-> Find its period.
+                \visible<4->{\color{foundersrock}
+                    \[
+                        T = \frac{4\pi}{10^3}\,\si{\s}
+                    \]
+            }
         \end{enumerate}
     \end{frame}
+
 \end{document}
