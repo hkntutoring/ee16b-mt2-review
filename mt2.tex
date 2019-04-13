@@ -42,13 +42,13 @@
 	\begin{frame}
 	\frametitle{How?}
 	\begin{itemize}
-	    \item $u(t)$ is the input in the system. If the system is controllable then we can use feedback, which means that we can let the input depend on the output, $\vec{x}(t)$.
-	    \item We would like to change the matrix multiplying $\vec{x}(t)$ such that  $|\lambda_i|<1$, so let's see what happens when we let $u(t) = K\vec{x}(t)$, where $K \in \R^{1 \times n}$.
+	    \item Assume e.g. a DT system. Input: $u[t]$ If the system is controllable then we can use feedback, which means that we can let the input depend on the output, $\vec{x}[t]$.
+	    \item We would like to change the matrix multiplying $\vec{x}[t]$ such that  $|\lambda_i|<1$, so let's see what happens when we let $u[t] = K\vec{x}[t]$, where $K \in \R^{1 \times n}$.
 	    \item Using this input we have: 
 	    \begin{align*}
-	        \vec{x}(t+1) = A\vec{x}(t) + Bu(t) + \vec{\omega}(t)\\
-	        = A\vec{x}(t) + BK\vec{x}(t) + \vec{\omega}(t)\\
-	        = (A + BK)\vec{x}(t) + \vec{\omega}(t)
+	        \vec{x}[t+1] = A\vec{x}[t] + Bu[t] + \vec{\omega}[t]\\
+	        = A\vec{x}[t] + BK\vec{x}[t] + \vec{\omega}[t]\\
+	        = (A + BK)\vec{x}[t] + \vec{\omega}[t]
 	    \end{align*}
 	  
 	    \item Strategically choosing K allows us to have specific $\lambda$'s for A + BK (Good!).
@@ -61,16 +61,16 @@
 	\begin{itemize}
 	    \item Suppose we are given a controllable system defined by: 
 	        \begin{align*}
-	            \vec{x}(t+1) = \begin{bmatrix} 2&-1 \\
+	            \vec{x}[t+1] = \begin{bmatrix} 2&-1 \\
 	            0&1
-	            \end{bmatrix} \vec{x}(t) + \begin{bmatrix} 2 \\ -1 \end{bmatrix}u(t)
+	            \end{bmatrix} \vec{x}[t] + \begin{bmatrix} 2 \\ -1 \end{bmatrix}u[t]
 	        \end{align*}
 	    \item Is the system stable? \pause No! $\lambda = 2, 1$
-	    \item What if we let \[ u(t) = \begin{bmatrix} f_1 & f_2 \end{bmatrix}\vec{x}(t)\]  Then we have:   
+	    \item What if we let \[ u[t] = \begin{bmatrix} f_1 & f_2 \end{bmatrix}\vec{x}[t]\]  Then we have:   
 	        \begin{align*}
 	            \vec{x}(t+1) = \begin{bmatrix} -2 & -1 \\
 	            0&1
-	            \end{bmatrix}\vec{x}(t) + \begin{bmatrix} 2 \\ -1 \end{bmatrix}\begin{bmatrix} f_1 & f_2 \end{bmatrix}\vec{x}(t) 
+	            \end{bmatrix}\vec{x}[t] + \begin{bmatrix} 2 \\ -1 \end{bmatrix}\begin{bmatrix} f_1 & f_2 \end{bmatrix}\vec{x}[t] 
 	        \end{align*}
 	    \item Solve for the values of $f_1$ and $f_2$ such that $\lambda_1 = -0.25$ and $\lambda_2 = 0$ \pause
 	    \item The answer is $f_1 = -1.50$ and $f_2 = 0.25$ \pause
@@ -131,17 +131,17 @@
 	\begin{frame}{Example}
 	Consider the following discrete time system:
 	\begin{align*}
-	    \vec{x}(t+1) = \begin{bmatrix} 
+	    \vec{x}[t+1] = \begin{bmatrix} 
 	            -2&2&0\\
 	            2&-4&2\\ 
 	            0&1&-1
-	            \end{bmatrix}\vec{x}(t) + \begin{bmatrix} 1 \\ 0 \\0 \end{bmatrix}u(t) 
+	            \end{bmatrix}\vec{x}[t] + \begin{bmatrix} 1 \\ 0 \\0 \end{bmatrix}u[t] 
 	\end{align*}
 
 	\begin{enumerate}[(a)]
 	    \item Is the system stable? Is it controllable? 
-	    \item Using an appropriate transformation ($\vec{z}(t) = T\vec{x}(t)$), bring the system to controllable canonical form. 
-	    \item Using the state feedback $u(t) =$ \[\begin{bmatrix} f_1 & f_2 & f_3  \end{bmatrix}\] $\vec{z}(t)$ bring the eigenvalues of the system to $0,0.75, -0.25$.
+	    \item Using an appropriate transformation ($\vec{z}[t] = T\vec{x}[t]$), bring the system to controllable canonical form. 
+	    \item Using the state feedback $u[t] =$ \[\begin{bmatrix} f_1 & f_2 & f_3  \end{bmatrix}\] $\vec{z}[t]$ bring the eigenvalues of the system to $0,0.75, -0.25$.
 	\end{enumerate}
 	\end{frame}
 
@@ -157,12 +157,12 @@
 	        
 	        \item As we previously mentioned the coefficients of the characteristic polynomial are closely related to the last row of the $A^*$ matrix. Therefore, the CCF of the system is: 
 	        \begin{align*}
-	            \vec{z}(t+1) = 
+	            \vec{z}[t+1] = 
 	                \begin{bmatrix} 
 	                    0&1&0\\
 	                    0&0&1\\ 
 	                    0&-8&-7
-	            \end{bmatrix}\vec{x}(t) + \begin{bmatrix} 0 \\ 0 \\1 \end{bmatrix}u(t) 
+	            \end{bmatrix}\vec{x}[t] + \begin{bmatrix} 0 \\ 0 \\1 \end{bmatrix}u[t] 
 	        \end{align*}
 	    \end{enumerate}
 	\end{frame}
@@ -171,12 +171,12 @@
 	\begin{enumerate}[(c)]
 	   \item Our system then becomes: 
 	   \begin{align*}
-	            \vec{z}(t+1) = 
+	            \vec{z}[t+1] = 
 	                \begin{bmatrix} 
 	                    0&1&0\\
 	                    0&0&1\\ 
 	                    f_1&f_2-8&f_3-7
-	            \end{bmatrix}\vec{x}(t) 
+	            \end{bmatrix}\vec{x}[t] 
 	        \end{align*}
 	    Which means its characteristic polynomial is : $\lambda^3 - (f_3 -7)\lambda^2 -(f_2 - 8)\lambda - f_1$ = 0. \\
 	   Now, we know the characteristic polynomial should be $\lambda(\lambda - \frac{3}{4})(\lambda + \frac{1}{4})$, so we can equate the two and solve for the feedback vector $\vec{f}\hspace{0.1cm}^T = \begin{bmatrix}  0 & \frac{1}{2}& \frac{3}{16}\end{bmatrix}$.
