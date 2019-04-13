@@ -54,6 +54,223 @@
 	
 	\end{frame}
 
+	\section[State-Space]{State-Space Representations}
+
+\begin{frame}
+\frametitle{(Slide 1) State Space Modeling: Example}
+
+Assume we have the following spring system: \\
+\includegraphics[scale=0.5]{./images/spring.png} \\ \pause
+We can model the system as a linear continuous time state space model: \\
+$\frac{d}{dt}\vec{x} = A\vec{x} + \vec{b}u(t)$ \\
+$\vec{y}(t) = C\vec{x}$ \\
+in which: \\
+$\vec{x} = 
+\begin{bmatrix}
+x(t) \\
+v(t)
+\end{bmatrix}$, 
+$A = 
+\begin{bmatrix}
+0 & 1 \\
+-\frac{k_{s}}{m} & 0
+\end{bmatrix}$, 
+$\vec{b} = 
+\begin{bmatrix}
+0 \\
+1
+\end{bmatrix}$, and
+$C = 
+\begin{bmatrix}
+0 & 1
+\end{bmatrix}$
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 2) State Space Modeling:}
+
+\includegraphics[scale=0.5]{images/flowchart.png} \\
+Always apply operations to right side first \\
+$\tilde{A} = V^{-1}AV$\\
+$\tilde{\vec{x}}$ = $V^{-1}\vec{x}$\\
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 3) State Space Modeling Procedure:}
+
+1. Set up differential equation of the form: 
+$\frac{d}{dt}\vec{x} = A\vec{x} + \vec{b}u(t)$ \\ \pause
+
+2. Find $\lambda$ of A; let 
+$\tilde{A} = 
+\begin{bmatrix}
+\lambda_{1} & 0 & \cdots & 0 \\
+0 & \lambda_{2} & 0  & \vdots \\
+\vdots & 0 & \ddots & 0 \\
+0 & \cdots & 0 & \lambda_{n} \\
+\end{bmatrix}$\\ \pause
+
+3. Find eigenvectors $\vec{v}$ of A; let
+$V = 
+\begin{bmatrix}
+\vec{v_{1}} & \vec{v_{2}} & ... & \vec{v_{n}}
+\end{bmatrix}$
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 4) State Space Modeling Procedure (Cont.):}
+
+4. convert $\vec{x}$ to $\tilde{\vec{x}}$ using:
+$\tilde{\vec{x}}$ = $V^{-1}\vec{x}$\\ \pause
+
+5. solve 
+$\frac{d}{dt}\tilde{\vec{x}} = \tilde{A}\tilde{\vec{x}}$\\ \pause
+
+6. convert solution back to $\vec{x}$ 
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 5) State Space Modeling:}
+
+Continuous time solution: 
+$\tilde{x} = e^{\lambda t} x_{0} + \frac{e^{\lambda t} - 1}{\lambda } u(t) + w(t)$\\
+
+Discrete time solution:
+$x_{d}(i+1) = e^{\lambda \Delta t} x_{d}(i) + \frac{e^{\lambda t} - 1}{\lambda } u(i) + w(i)$\\
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 6) State Space Modeling Example:}
+
+given the following circuit: \\
+\includegraphics[scale=0.5]{./images/circuit.png} \\
+in which $R_{1} = 2 \Omega, R_{2} = \frac{8}{3} \Omega, C_{1} = 1 C, C_{2} = \frac{3}{2} C$ \\
+solve equations for $V_{1} and V_{2}$
+\end{frame}
+
+\section[S,O,\&C]{Stability, Observability, and Controlability}
+
+\begin{frame}
+\frametitle{(Slide 7) Stability, Observability, Controllability:}
+
+given: \\ 
+$\vec{x}(i+1) = A\vec{x}(i) + Bu(i)$ \\
+$\vec{y}(i) = C\vec{x}(i)$ \\
+in which: \\
+$\vec{x}$ is our state, \\
+$\vec{u}$ is our input, \\
+$\vec{y}$ is what we can observe: \\
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 8) Stability (Discrete time):}
+
+Discrete time model: \\
+if $|\lambda_{i}| < 1$ for all $\lambda_{i}$ of A, system is stable\\
+intuition: if any $|\lambda_{i}| >= 1$, state vector is increasing each time step will be infinitely magnified over time \\
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 9) Stability (Continuous time):}
+
+Continuous time model: \\
+if the real parts of all eigenvalues of A are strictly negative, system is stable\\
+intuition: if real part of eigenvalue is positive, state vector is increasing over time and will be infinitely magnified over time \\
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 10) Controllability:}
+
+if
+$\begin{bmatrix}
+B && AB && ... && A^{n-1}B
+\end{bmatrix}$
+spans $R^{n}$, then system is controllable 
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 11) Feedback:}
+
+if system is controllable, we can set: 
+$u(t) = K\vec{x}(t)$ \\
+plugging in, we get: 
+$\vec{x}(t+1) = (A + BK)\vec{x}(t)$ \\
+we can find the eigenvalues of (A + BK) to check for stability
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 12) Observability:} 
+
+if 
+$\begin{bmatrix}
+C \\
+CA \\
+\vdots \\
+CA^{n-1} \\
+\end{bmatrix}$
+spans $R^{n}$, system is observable \\
+intuition: if observability matrix is full rank, it is invertible, and we can retrieve all the past states without loss of information \\
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 13) Stability, Controllability, Observability Example:}
+
+given the following system: \\
+$\vec{x}[t+1] = 
+\begin{bmatrix}
+-5 & 0 \\
+7 & 6
+\end{bmatrix}
+\vec{x}[t] + 
+\begin{bmatrix}
+2 \\
+-1
+\end{bmatrix}
+u[t]$\\
+$
+\vec{y}[t] =
+\begin{bmatrix}
+1 & 1
+\end{bmatrix}
+\vec{x}[t]$
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 14) Stability Check:}
+
+$\lambda = 6, -5$\\ \pause
+System is unstable
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 15) Controllability Check:}
+
+$\begin{bmatrix}
+AB & B
+\end{bmatrix}$ = 
+$\begin{bmatrix}
+-10 & 2 \\
+8 & -1
+\end{bmatrix}$
+which spans $R^{n}$ \\ \pause
+System is controllable
+\end{frame}
+
+\begin{frame}
+\frametitle{(Slide 16) Observability Check:}
+
+$\begin{bmatrix}
+C \\
+CA
+\end{bmatrix}$ = 
+$\begin{bmatrix}
+1 & 1 \\
+2 & 6
+\end{bmatrix}$ 
+which spans $R^{n}$ \\ \pause
+System is observable
+\end{frame}
+
 	\section{Eigenvalue Placement}
 
 	\begin{frame}
