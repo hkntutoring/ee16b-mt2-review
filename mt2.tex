@@ -5,6 +5,7 @@
 \usepackage[siunitx, american]{circuitikz}
 \usepackage{hyperref}
 \usepackage{cancel}
+\usetikzlibrary{automata, arrows}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -57,15 +58,15 @@
 	\section[State-Space]{State-Space Representations}
 
 \begin{frame}
-\frametitle{(Slide 1) State Space Modeling: Example}
+\frametitle{State Space Modeling: Example}
 
 Assume we have the following spring system: \\
 \includegraphics[scale=0.5]{./images/spring.png} \\ \pause
 We can model the system as a linear continuous time state space model: \\
-$\frac{d}{dt}\vec{x} = A\vec{x} + \vec{b}u(t)$ \\
-$\vec{y}(t) = C\vec{x}$ \\
+$\frac{d}{dt}\vec{x}(t) = A\vec{x}(t) + \vec{b}u(t)$ \\
+$\vec{y}(t) = C\vec{x}(t)$ \\
 in which: \\
-$\vec{x} = 
+$\vec{x}(t) = 
 \begin{bmatrix}
 x(t) \\
 v(t)
@@ -87,71 +88,86 @@ $C =
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 2) State Space Modeling:}
+\frametitle{State Space Modeling:}
+\begin{tikzpicture}
+    \node at (-2, 2) {original space:};
+    \node at (-2, 0) {new space:};
 
-\includegraphics[scale=0.5]{images/flowchart.png} \\
-Always apply operations to right side first \\
-$\tilde{A} = V^{-1}AV$\\
-$\tilde{\vec{x}}$ = $V^{-1}\vec{x}$\\
+    \node[draw,circle] (x) at (0, 2) {\(\vec x(t)\)};
+    \node[draw,circle] (dx) at (3, 2) {\(\ddt{}\vec x(t)\)};
+    \node[draw,circle] (xt) at (0, 0) {\(\tilde{\vec{x}}(t)\)};
+    \node[draw,circle] (dxt) at (3, 0) {\(\ddt{}\tilde{\vec{x}}(t)\)};
+
+    \path[->] (x) edge node [above] {\(A\)} (dx);
+    \path[->] (xt) edge node [above] {\(\tilde A\)} (dxt);
+    \path[->] (x) edge [bend right] node [left] {\(T^{-1}\)} (xt);
+    \path[->] (xt) edge [bend right] node [right] {\(T\)} (x);
+    \path[->] (dx) edge [bend right] node [left] {\(T^{-1}\)} (dxt);
+    \path[->] (dxt) edge [bend right] node [right] {\(T\)} (dx);
+\end{tikzpicture}
+
+Always apply operations to right side first
+\[\tilde{A} = T^{-1}AT \]
+\[\tilde{\vec{x}}(t) = T^{-1}\vec{x}(t)\]
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 3) State Space Modeling Procedure:}
-
-1. Set up differential equation of the form: 
-$\frac{d}{dt}\vec{x} = A\vec{x} + \vec{b}u(t)$ \\ \pause
-
-2. Find $\lambda$ of A; let 
-$\tilde{A} = 
-\begin{bmatrix}
+\frametitle{State Space Modeling Procedure:}
+\begin{enumerate}
+    \item Set up differential equation of the form: $\ddt{}\vec{x}(t) = A\vec{x}(t) + \vec{b}u(t)$  \pause
+\item Find $\lambda_i$ of \(A\); let $\tilde{A} = \begin{bmatrix}
 \lambda_{1} & 0 & \cdots & 0 \\
 0 & \lambda_{2} & 0  & \vdots \\
 \vdots & 0 & \ddots & 0 \\
 0 & \cdots & 0 & \lambda_{n} \\
-\end{bmatrix}$\\ \pause
-
-3. Find eigenvectors $\vec{v}$ of A; let
-$V = 
-\begin{bmatrix}
-\vec{v_{1}} & \vec{v_{2}} & ... & \vec{v_{n}}
-\end{bmatrix}$
+\end{bmatrix}$ \pause
+\item Find eigenvectors $\vec{v}_i$ of \(A\); let
+$T = \begin{bmatrix}
+\vec{v_{1}} & \vec{v_{2}} & \cdots & \vec{v_{n}}
+\end{bmatrix}$ \pause
+\item Convert $\vec{x}(t)$ to $\tilde{\vec{x}}(t)$ using:
+$\tilde{\vec{x}}(t) = T^{-1}\vec{x}(t)$ \pause
+\item Solve $\frac{d}{dt}\tilde{\vec{x}}(t) = \tilde{A}\tilde{\vec{x}}(t) + T \vec{b} u(t)$ \pause
+\item Convert solution back to $\vec{x}(t)$ 
+\end{enumerate}
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 4) State Space Modeling Procedure (Cont.):}
-
-4. convert $\vec{x}$ to $\tilde{\vec{x}}$ using:
-$\tilde{\vec{x}}$ = $V^{-1}\vec{x}$\\ \pause
-
-5. solve 
-$\frac{d}{dt}\tilde{\vec{x}} = \tilde{A}\tilde{\vec{x}}$\\ \pause
-
-6. convert solution back to $\vec{x}$ 
-\end{frame}
-
-\begin{frame}
-\frametitle{(Slide 5) State Space Modeling:}
+\frametitle{State Space Modeling:}
 
 Continuous time solution: 
-$\tilde{x} = e^{\lambda t} x_{0} + \frac{e^{\lambda t} - 1}{\lambda } u(t) + w(t)$\\
+\[
+    \tilde{x}(t) = e^{\lambda t} \tilde x(0) + \frac{e^{\lambda t} - 1}{\lambda } u(t) + w(t)
+\]
 
 Discrete time solution:
-$x_{d}(i+1) = e^{\lambda \Delta t} x_{d}(i) + \frac{e^{\lambda t} - 1}{\lambda } u(i) + w(i)$\\
+\[
+     x_{d}(i+1) = e^{\lambda \Delta} x_{d}(i) + \frac{e^{\lambda \Delta} - 1}{\lambda } u(i) + w(i)
+\]
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 6) State Space Modeling Example:}
+\frametitle{State Space Modeling Example:}
 
-given the following circuit: \\
-\includegraphics[scale=0.5]{./images/circuit.png} \\
-in which $R_{1} = 2 \Omega, R_{2} = \frac{8}{3} \Omega, C_{1} = 1 C, C_{2} = \frac{3}{2} C$ \\
-solve equations for $V_{1} and V_{2}$
+Given the following circuit: 
+
+\begin{tikzpicture}[scale=2]
+    \draw (2, 0.75) to [R, *-, l_={\(R_2\)}] (1, 0.75) to [R, *-, l_={\(R_1\)}] (0, 0.75) to [voltage source, v_>={\(V_{in}\)}] (0, 0);
+    \draw (1, 0.75) node[label={\(V_1\)}] {} to [C, l={\(C_1\)}] (1, 0) node[ground] {};
+    \draw (2, 0.75) node[label={\(V_2\)}] {} to [C, l={\(C_2\)}] (2, 0) node[ground] {};
+    %\draw (0, 0) to (1.5, 0) to [C, l=2<\micro\farad>] (1.5, 1) to (0, 1) to [L, l=2<\henry>] (0, 0);
+    %\draw (0, 0) to (0.75, 0) to (0.75, 0.0) node[ground] {} to (0.75, 0) to  (1.5, 0) to [C, l=2<\micro\farad>, v_<=\(v\)] (1.5, 1) to (0, 1) to[I=\(i\)] [L, l=2<\henry>] (0, 0);
+            \node [ground] (0, 0) {};
+\end{tikzpicture}
+
+in which $R_{1} = \SI{2}{\ohm}, R_{2} = \frac{8}{3} \si{\ohm}, C_{1} = \SI{1}{\coulomb}, C_{2} = \frac{3}{2} \si{\coulomb} $ \\
+solve equations for $V_{1}$ and $V_{2}$
 \end{frame}
 
 \section[S,O,\&C]{Stability, Observability, and Controlability}
 
 \begin{frame}
-\frametitle{(Slide 7) Stability, Observability, Controllability:}
+\frametitle{Stability, Observability, Controllability:}
 
 given: \\ 
 $\vec{x}(i+1) = A\vec{x}(i) + Bu(i)$ \\
@@ -163,7 +179,7 @@ $\vec{y}$ is what we can observe: \\
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 8) Stability (Discrete time):}
+\frametitle{Stability (Discrete time):}
 
 Discrete time model: \\
 if $|\lambda_{i}| < 1$ for all $\lambda_{i}$ of A, system is stable\\
@@ -171,7 +187,7 @@ intuition: if any $|\lambda_{i}| >= 1$, state vector is increasing each time ste
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 9) Stability (Continuous time):}
+\frametitle{Stability (Continuous time):}
 
 Continuous time model: \\
 if the real parts of all eigenvalues of A are strictly negative, system is stable\\
@@ -179,7 +195,7 @@ intuition: if real part of eigenvalue is positive, state vector is increasing ov
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 10) Controllability:}
+\frametitle{Controllability:}
 
 if
 $\begin{bmatrix}
@@ -189,7 +205,7 @@ spans $R^{n}$, then system is controllable
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 11) Feedback:}
+\frametitle{Feedback:}
 
 if system is controllable, we can set: 
 $u(t) = K\vec{x}(t)$ \\
@@ -199,7 +215,7 @@ we can find the eigenvalues of (A + BK) to check for stability
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 12) Observability:} 
+\frametitle{Observability:} 
 
 if 
 $\begin{bmatrix}
@@ -213,7 +229,7 @@ intuition: if observability matrix is full rank, it is invertible, and we can re
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 13) Stability, Controllability, Observability Example:}
+\frametitle{Stability, Controllability, Observability Example:}
 
 given the following system: \\
 $\vec{x}[t+1] = 
@@ -236,14 +252,14 @@ $
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 14) Stability Check:}
+\frametitle{Stability Check:}
 
 $\lambda = 6, -5$\\ \pause
 System is unstable
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 15) Controllability Check:}
+\frametitle{Controllability Check:}
 
 $\begin{bmatrix}
 AB & B
@@ -257,7 +273,7 @@ System is controllable
 \end{frame}
 
 \begin{frame}
-\frametitle{(Slide 16) Observability Check:}
+\frametitle{Observability Check:}
 
 $\begin{bmatrix}
 C \\
