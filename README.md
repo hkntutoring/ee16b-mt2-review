@@ -1,3 +1,1 @@
-# Official HKN EE16B Review Session Slides
-
-More details coming soon.
+# Official HKN EE16B MT2 Review Session Slides
