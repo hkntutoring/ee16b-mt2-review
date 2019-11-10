@@ -920,17 +920,17 @@ If we were to show the projected vectors in the original space, we can multiply 
 \begin{frame}{Discretization: Q1}
 Note: this section follows hw8 q1 almost exactly. Suppose we have a scalar system
 \[ \frac{d}{dt} x(t) = \alpha x + \vec{\beta}^T \vec u(t) \]
-and we apply a constant input $\vec{u}_n$ for times $t \in [nT, (n + 1)T)$ for some $T > 0$. Given $x(nT)$ solve the differential equation
+and we apply a constant input $\vec{u}_n$ for times $t \in [nT, (n + 1) \Delta)$ for some $T > 0$. Given $x(nT)$ solve the differential equation
 \end{frame}
 
 \begin{frame}{Discretization: Q1 Sol}
-From $t = nT$ to $t = (n + 1)T$, $\vec{\beta}^T \vec{u}$ is a constant scalar. Thus, we can solve this like a normal differential equation. Let $x = x' - \frac{\vec \beta^T \vec u}{\alpha}$. Then
+From $t = n \Delta$ to $t = (n + 1) \Delta$, $\vec{\beta}^T \vec{u}$ is a constant scalar. Thus, we can solve this like a normal differential equation. Let $x = x' - \frac{\vec \beta^T \vec u}{\alpha}$. Then
 \begin{align*}
 \frac{d}{dt} x(t) &= \alpha \left(x' - \frac{\vec \beta^T \vec u}{\alpha}\right) + \vec{\beta}^T \vec u(t) \\
 \differential{t}x = \differential{t}x' &= \alpha x' \\
-x' &= A e^{\alpha (t - nT)} \text{, for some integration constant \em{A}} \\
-x + \frac{\vec \beta^T \vec u}{\alpha} &= A e^{\alpha (t - nT)} \\
-x &= A e^{\alpha (t - nT)} - \frac{\vec \beta^T \vec u}{\alpha}
+x' &= A e^{\alpha (t - n \Delta)} \text{, for some integration constant \em{A}} \\
+x + \frac{\vec \beta^T \vec u}{\alpha} &= A e^{\alpha (t - n \Delta)} \\
+x &= A e^{\alpha (t - n \Delta)} - \frac{\vec \beta^T \vec u}{\alpha}
 \end{align*}
 \end{frame}
 \begin{frame}{Discretization: Q1 Sol}
@@ -938,22 +938,22 @@ At which point we can use our initial condition to get
 \begin{align*}
 x(nT) &= A - \frac{\vec \beta^T \vec u}{\alpha} \\
 A &= x(nT) + \frac{\vec \beta^T \vec u}{\alpha} \\
-x &= \left( x(nT) + \frac{\vec \beta^T \vec u}{\alpha} \right) e^{\alpha (t - nT)} - \frac{\vec \beta^T \vec u}{\alpha}
+x &= \left( x(n \Delta) + \frac{\vec \beta^T \vec u}{\alpha} \right) e^{\alpha (t - n \Delta)} - \frac{\vec \beta^T \vec u}{\alpha}
 \end{align*}
 \end{frame}
 
 \begin{frame}{Discretization: Q2}
-Using the differential equation derived from question 1, create a discrete-time system to model the continuous time. In other words, if $x[n] = x(nT), \vec{u}[n] = \vec{u}(nT)$, find a relation such that
+Using the differential equation derived from question 1, create a discrete-time system to model the continuous time. In other words, if $x[n] = x(n \Delta), \vec{u}[n] = \vec{u}(n \Delta)$, find a relation such that
 \[ x[n + 1] = A_d x[n] + B_d \vec{u}[n] \]
 \end{frame}
 
 \begin{frame}{Discretization: Q2 Sol}
 We can solve the previous solution for $x((n + 1)T)$
 \begin{align*}
-x((n + 1)T) &= \left( x(nT) + \frac{\vec \beta^T \vec u(nT)}{\alpha} \right) e^{\alpha ((n + 1)T - nT)} - \frac{\vec \beta^T \vec u(nT)}{\alpha} \\
-x[n + 1] &= e^{\alpha T} x[n] + \frac{e^{\alpha T} - 1}{\alpha} \vec{\beta}^T \vec{u}[n] \\
+x((n + 1) \Delta) &= \left( x(n \Delta) + \frac{\vec \beta^T \vec u(n \Delta)}{\alpha} \right) e^{\alpha ((n + 1)\Delta - n \Delta)} - \frac{\vec \beta^T \vec u(n \Delta)}{\alpha} \\
+x[n + 1] &= e^{\alpha \Delta} x[n] + \frac{e^{\alpha \Delta} - 1}{\alpha} \vec{\beta}^T \vec{u}[n] \\
 \end{align*}
-We see that $A_d = e^{\alpha T}, B_d = ((e^{\alpha T} - 1) / \alpha) \vec{\beta}^T$
+We see that $A_d = e^{\alpha \Delta}, B_d = ((e^{\alpha \Delta} - 1) / \alpha) \vec{\beta}^T$
 \end{frame}
 
 \begin{frame}{Discretization: Q3}
