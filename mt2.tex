@@ -848,7 +848,7 @@ This is an eigen decomposition since $\Sigma^2$ is diagonal and $U^{-1} = U^T$. 
 Given a right singular vector $\vec{v}_i$ which we found from the previous part, we can apply it
 \begin{align*}
 A \vec{v}_i &= \left( \sum_{k = 1}^r \sigma_k \vec{u}_k \vec{v}_k^T \right) \vec{v}_i \\
-&= \sum_{k = 1}^r \sigma_k \vec{u}_k \vec{v}_k^T \vec{i} \\
+&= \sum_{k = 1}^r \sigma_k \vec{u}_k \delta_k^i \\
 &= \sigma_i \vec{u}_i \\
 \vec{u}_i &= \frac{1}{\sigma_i} A \vec{v}_i
 \end{align*}
