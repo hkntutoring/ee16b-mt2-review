@@ -920,7 +920,7 @@ If we were to show the projected vectors in the original space, we can multiply 
 \begin{frame}{Discretization: Q1}
 Note: this section follows hw8 q1 almost exactly. Suppose we have a scalar system
 \[ \frac{d}{dt} x(t) = \alpha x + \vec{\beta}^T \vec u(t) \]
-and we apply a constant input $\vec{u}_n$ for times $t \in [nT, (n + 1) \Delta)$ for some $T > 0$. Given $x(nT)$ solve the differential equation
+and we apply a constant input $\vec{u}_n$ for times $t \in [n \Delta, (n + 1) \Delta)$ for some $T > 0$. Given $x(n \Delta)$ solve the differential equation
 \end{frame}
 
 \begin{frame}{Discretization: Q1 Sol}
@@ -937,7 +937,7 @@ x &= A e^{\alpha (t - n \Delta)} - \frac{\vec \beta^T \vec u}{\alpha}
 At which point we can use our initial condition to get
 \begin{align*}
 x(nT) &= A - \frac{\vec \beta^T \vec u}{\alpha} \\
-A &= x(nT) + \frac{\vec \beta^T \vec u}{\alpha} \\
+A &= x(n \Delta) + \frac{\vec \beta^T \vec u}{\alpha} \\
 x &= \left( x(n \Delta) + \frac{\vec \beta^T \vec u}{\alpha} \right) e^{\alpha (t - n \Delta)} - \frac{\vec \beta^T \vec u}{\alpha}
 \end{align*}
 \end{frame}
