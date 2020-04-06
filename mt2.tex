@@ -39,8 +39,8 @@
 \usetheme{hutch-pdflatex}
 
 \title{EE16B --- Midterm 2 Review}
-\author{George Higgins Hutchinson, Naomi Sagan, }
-\institute{Presented by: Vishnu Iyer, George Higgins Hutchinson, Rehan Durrani}
+\author{George Higgins Hutchinson, Parth Nobel, Matteo Ciccozi, Patrick Wang, Naomi Sagan, Rehan Durrani}
+\institute{Presented by: Naomi Sagan, George Higgins Hutchinson, Rehan Durrani}
 \date{\today}
 
 \begin{document}
@@ -165,8 +165,11 @@ in which $R_{1} = \SI{2}{\ohm}, R_{2} = \frac{8}{3} \si{\ohm}, C_{1} = \SI{1}{\c
 solve equations for $V_{1}$ and $V_{2}$
 \end{frame}
 
-\section[S,O,\&C]{Stability, Observability, and Controlability}
-
+\section[S,O,\&C]{Stability, Observability, and Controllability}
+\begin{frame}{Frame Title}
+    \frametitle{Stability, Observability, and Controllability:}
+    For Spring 2020, stability is not in scope for Midterm 2, but will be in scope for the Final Exam. Observability is no longer in scope, but is included as a quick detour.
+\end{frame}
 \begin{frame}
 \frametitle{Stability, Observability, Controllability:}
 
@@ -662,7 +665,7 @@ u_l(t)
 
 
 \begin{frame}{Break}
-    \Large{GIVE US FEEDBACK!\\\vspace{2em}\\\url{hkn.mu/feedback}\\\url{https://github.com/hkntutoring/ee16b-review/issues} }
+    \Large{GIVE US FEEDBACK!\\ \\\url{hkn.mu/feedback}\\\url{https://github.com/hkntutoring/ee16b-review/issues} }
 \end{frame}
 
 	\section[SVD]{Singular Value Decomposition}
@@ -744,6 +747,45 @@ Given a right singular vector $\vec{v}_i$ which we found from the previous part,
 	\item With the SVD, we only have to save $r$ set of two vectors and a scalar, which saves us a lot of space if the rank is small with respect to the matrix. Also, less computation is carried out if we represent the matrix as the outer product form.
 	\end{itemize}
 	\end{frame}
+	
+	\begin{frame}{SVD Practice Problem (Inspired by FA17 EE16B MT2)}
+	    \includegraphics[width=4in]{predictions.png}
+	\end{frame}
+	
+	\begin{frame}{SVD Practice Problem (Inspired by FA17 EE16B MT2)}
+	    Consider a matrix \(M \in \mathbb{R}^{2020\times 4}\) which represents scores for students in EECS283A, UCB's hottest new ML class. The first column represents scores on midterm 1, the second midterm 2, the third the final, and the fourth the homeworks. A TA is trying to perform some analysis and computes the SVD. After obtaining \(\Sigma\), \(U\) and \(V\) they then plot the singular values, as well as the projection of \(u_1\) and \(u_2\) onto the column space, producing graphs 1 and 2 respectively. Please answer the following questions based off of the plots.
+	    
+	    \includegraphics[scale=0.33]{images/Graph1.png}
+	    \includegraphics[scale=0.32]{images/Graph2.png}
+	\end{frame}
+	
+	\begin{frame}{SVD Practice Problem (Inspired by FA17 EE16B MT2)}
+	    \begin{enumerate}[<+->]
+            \item How many singular value-right-left-eigenvector triplets would you keep when compressing this matrix and why? \pause\\
+                    2 (note that there are 2 non-small singular values)
+            \item True or False: One singular vector depends only on homework scores. \pause\\
+                    True. In graph (2), we see that $u_2$ is almost completely made of $a_4$
+            \item True or False (and why): Student exam scores are highly correlated. \pause\\
+                    True. (full explanation on next slide as it's long)
+            \item True or False (and why): Students who performed well on exams did poorly on the homeworks. \pause\\
+                    False. One SVD basis element is attached to exam scores, one to lab scores, and they are independent.
+        \end{enumerate}
+	\end{frame}
+	
+	\begin{frame}{SVD Practice Problem (Inspired by FA17 EE16B MT2)}
+	    Student exam scores ARE highly correlated. Note from graph (2) that
+	    \begin{equation}
+	        u_1 \approx c(a_1+a_2+a_3)
+	    \end{equation}
+	    and that no other $u$ vector strongly depends on any of those.
+	    Thus,
+	    \begin{equation}
+	        M \approx \sigma_1c(a_1+a_2+a_3)v_1' + \sigma_2u_2v_2'
+	    \end{equation}
+	    Since this linear combination of exam scores contains all of the information, they must be strongly correlated.
+	\end{frame}
+	
+
 
 	\section[PCA]{Principle Component Analysis}
 
@@ -776,7 +818,7 @@ Given a right singular vector $\vec{v}_i$ which we found from the previous part,
 	\section{Discretization}
 	
 	\begin{frame}{Discretization: Q1}
-	Note: this section follows hw8 q1 almost exactly. Suppose we have a scalar system
+	Note: this section follows fa19 hw8 q1 almost exactly. Suppose we have a scalar system
 	\[ \frac{d}{dt} x(t) = \alpha x + \vec{\beta}^T \vec u(t) \]
 	and we apply a constant input $\vec{u}_n$ for times $t \in [nT, (n + 1)T)$ for some $T > 0$. Given $x(nT)$ solve the differential equation
 	\end{frame}
